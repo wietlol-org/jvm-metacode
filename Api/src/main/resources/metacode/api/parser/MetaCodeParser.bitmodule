@@ -1,0 +1,89 @@
+
+@Module("MetaCodeParser")
+@Owner("Wietlol")
+@Version("1.0")
+
+@Root("../../../../")
+@ApiRoot("java")
+@ImplRoot("../../../Core/src/main/java")
+
+@ApiRootPackage("metacode.api.parser.data")
+@RootPackage("metacode.core.parser.data")
+@BuilderPackage(".builders")
+@ModelPackage(".models")
+@SerializerPackage(".serializers")
+
+;
+
+contract ParserRule {
+	value name: String
+}
+
+blueprint SimpleRule : ParserRule {
+	property(1) name: String
+	property(2) expression: ParserExpression
+}
+
+blueprint MultiOptionRule : ParserRule {
+	property(1) name: String
+	property(2) options: List<RuleOption>
+}
+
+blueprint RuleOption {
+	property(1) name: String
+	property(2) expression: ParserExpression
+}
+
+blueprint PriorityTreeRule : ParserRule {
+	property(1) name: String
+	property(2) options: List<PriorityTreeRuleOption>
+}
+
+blueprint PriorityTreeRuleOption {
+	property(1) name: String
+	property(2) priority: Double
+	property(3) expression: ParserExpression
+}
+
+contract ParserExpression {
+}
+
+blueprint AnyOfParserExpression : ParserExpression {
+	property(1) expressions: List<ParserExpression>
+}
+
+blueprint SequenceParserExpression : ParserExpression {
+	property(1) expressions: List<ParserExpression>
+}
+
+blueprint LabelledParserExpression : ParserExpression {
+	property(1) label: String
+	property(2) expression: ParserExpression
+}
+
+blueprint OptionalParserExpression : ParserExpression {
+	property(1) expression: ParserExpression
+	property(2) isGreedy: Boolean = true
+}
+
+blueprint RepeatingParserExpression : ParserExpression {
+	property(1) expression: ParserExpression
+	property(2) minimumMatches: Integer
+	property(3) isGreedy: Boolean = true
+}
+
+blueprint RuleParserExpression : ParserExpression {
+	property(1) ruleName: String
+	property(2) prefix: String? = null
+}
+
+blueprint TypeParserExpression : ParserExpression {
+	property(1) typeName: String
+}
+
+blueprint LiteralParserExpression : ParserExpression {
+	property(1) query: String
+}
+
+blueprint WildcardParserExpression : ParserExpression {
+}

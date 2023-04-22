@@ -1,0 +1,41 @@
+
+grammar Json;
+
+openBrace : '{' ;
+closeBrace : '}' ;
+openBracket : '[' ;
+closeBracket : ']' ;
+colon : ':' ;
+comma : ',' ;
+
+number
+	: '-'? [0-9]{1,} ('.' [0-9]{1,})?
+	;
+
+string
+	: '"' (('\\' [\\trn"] ) | [^"]){0,} '"'
+	;
+
+null
+	: 'null'
+	;
+
+boolean
+	: 'true'
+	| 'false'
+	;
+
+@Skip
+lineComment
+	: '//' [^\r\n]{0,}
+	;
+
+@Skip
+blockComment
+	: '/*' ([^*] | '*' [^/]){0,} '*/'
+	;
+
+@Skip
+whitespace
+	: [ \t\r\n]
+	;

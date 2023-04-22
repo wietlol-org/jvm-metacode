@@ -1,0 +1,36 @@
+
+grammar Json;
+
+jsonLines
+	: values=value{0,}
+	;
+
+value
+	: value=&number     #number
+	| value=&string     #string
+	| value=object      #object
+	| value=array       #array
+	| value=boolean     #boolean
+	| value=null        #null
+	;
+
+object
+	: '{' (properties=property (',' properties=property){0,} ','?)? '}'
+	;
+
+property
+	: name=&string ':' value=value
+	;
+
+array
+	: '[' (elements=value (',' elements=value){0,} ','?)? ']'
+	;
+
+null
+	: 'null'
+	;
+
+boolean
+	: 'true'
+	| 'false'
+	;

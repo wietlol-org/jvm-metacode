@@ -1,0 +1,6 @@
+syntax:
+	- fix HeadFirstLexer's findHeads optimization in case of negative charsets
+	- add support for + and * as shorthands for {1,} and {0,} respectively
+	- add support for single-file lexer and parser
+	- add support for modes
+	- add support for channels

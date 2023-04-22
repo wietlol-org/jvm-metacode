@@ -1,0 +1,60 @@
+
+@Module("MetaCodeLexer")
+@Owner("Wietlol")
+@Version("1.0")
+
+@Root("../../../../")
+@ApiRoot("java")
+@ImplRoot("../../../Core/src/main/java")
+
+@ApiRootPackage("metacode.api.lexer.data")
+@RootPackage("metacode.core.lexer.data")
+@BuilderPackage(".builders")
+@ModelPackage(".models")
+@SerializerPackage(".serializers")
+
+;
+
+contract LexerExpression {
+}
+
+blueprint AnyOfLexerExpression : LexerExpression {
+	property(1) expressions: List<LexerExpression>
+}
+
+blueprint CharacterGroupLexerExpression : LexerExpression {
+	property(1) characters: Set<Character>
+	property(2) isPositive: Boolean = true
+}
+
+blueprint LiteralLexerExpression : LexerExpression {
+	property(1) query: String
+}
+
+blueprint OptionalLexerExpression : LexerExpression {
+	property(1) expression: LexerExpression
+	property(2) isGreedy: Boolean = true
+}
+
+blueprint RepeatingLexerExpression : LexerExpression {
+	property(1) expression: LexerExpression
+	property(2) minimumMatches: Integer
+	property(3) isGreedy: Boolean = true
+}
+
+blueprint SequenceLexerExpression : LexerExpression {
+	property(1) expressions: List<LexerExpression>
+}
+
+blueprint WildcardLexerExpression : LexerExpression {
+}
+
+blueprint LexerRule {
+	property(1) name: String
+	property(2) metaData: LexerRuleMetaData
+	property(3) expression: LexerExpression
+}
+
+blueprint LexerRuleMetaData {
+	property(1) isSkippingRule: Boolean = false
+}
